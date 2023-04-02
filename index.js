@@ -111,8 +111,14 @@ document.addEventListener('keydown',function(e){
         jumping = false;
 
     }
-})
-document.addEventListener("keyup", dino.draw());
+});
+
+document.addEventListener("keyup", function(e){
+    if(e.code === 'ArrowDown') {
+        down = false;
+        jumping = false;
+    }
+});
 
 function collision(dino, cactus){
     var xDifference = cactus.x - (dino.x+dino.width);
