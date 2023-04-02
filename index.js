@@ -10,14 +10,26 @@ img1.src = './assets/cactus.png';
 var img2 = new Image();
 img2.src = './assets/dino.png';
 
+var img3 = new Image();
+img3.src = './assets/dinodown.png';
+
 var dino = {
     x:10,
     y:230,
     width: 50,
     height: 50,
     draw(){
-        ctx.fillStyle='green';
         ctx.drawImage(img2, this.x,this.y,this.width,this.height)
+    }
+}
+
+var dinodown = {
+    x:10,
+    y:260,
+    width: 75,
+    height: 25,
+    draw(){
+        ctx.drawImage(img3, this.x,this.y,this.width,this.height)
     }
 }
 
@@ -29,7 +41,6 @@ class Cactus {
         this.height = 50;
     }
     draw(){
-        ctx.fillStyle='red';
         ctx.drawImage(img1, this.x,this.y,this.width,this.height);
     }
 }
@@ -41,6 +52,8 @@ var timer = 0;
 var cactusmix = [];
 var jumpingTime=0;
 var animation;
+var jumping = false; 
+var down = false; 
 
 function actionPerFrame(){
     animation = requestAnimationFrame(actionPerFrame);
@@ -56,37 +69,50 @@ function actionPerFrame(){
         if(a.x < 0-a.width ){
            o.splice(i,1);
         }
-        a.x--;
+        a.x-=6;
         a.draw();
 
         collision(dino, a);
     });
     if(jumping==true){
-        dino.y-=2;
+        dino.y-=4;
         jumpingTime++;
     }
 
     if(jumping==false){
         if(dino.y<230)
-            dino.y+=2;
+            dino.y+=4;
     }
 
-    if(jumpingTime > 50){
+    if(jumpingTime > 25){
         jumping = false;
-        jumpingTime=0;
+        jumpingTime = 0
     }
 
-    dino.draw();
+
+    if(down == true)
+        dinodown.draw();
+    else {
+        dino.draw();
+    }
     
 }
 
 actionPerFrame(); 
-var jumping = false;
+
 document.addEventListener('keydown',function(e){
-    if(e.code==='Space'){
+    if((e.code==='ArrowUp' || e.code==='Space')&& dino.y == 230){
         jumping = true;
+        down = false;
+    }
+    
+    if(e.code==='ArrowDown') {
+        down = true;
+        jumping = false;
+
     }
 })
+document.addEventListener("keyup", dino.draw());
 
 function collision(dino, cactus){
     var xDifference = cactus.x - (dino.x+dino.width);
@@ -97,3 +123,9 @@ function collision(dino, cactus){
         cancelAnimationFrame(animation);
     };
 }
+
+// 
+// 1. 다른 선인장 등장
+// 2. 점수
+// 3. 다시하기
+// 4. 공중에서 잠깐 멈추기
