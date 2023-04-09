@@ -68,17 +68,30 @@ var jumpingTime=0;
 var animation;
 var jumping = false; 
 var down = false; 
+var random = 0;
 
 function actionPerFrame(){
     animation = requestAnimationFrame(actionPerFrame);
     timer++;
     
     ctx.clearRect(0,0, canvas.width, canvas.height);
-    
     if(timer%120===0){
+        random = Math.floor(Math.random() * 4);
+        console.log(random);
+        if(random == 0) {
+            img1.src = './assets/cactus.png';
+        }
+        else if(random == 1) {
+            img1.src = './assets/flappy.png';
+        }
+        else if(random == 2) {
+            img1.src = './assets/strawberry.png';
+        }
+        else if(random == 3) {
+            img1.src = './assets/skydino.png';
+        }
         var cactus = new Cactus();
         cactusmix.push(cactus);
-        
     }
     cactusmix.forEach((a, i, o)=>{
         if(a.x < 0-a.width ){
@@ -156,3 +169,4 @@ function collision(dino, cactus){
 // 2. 점수
 // 3. 다시하기
 // 4. 공중에서 잠깐 멈추기
+
