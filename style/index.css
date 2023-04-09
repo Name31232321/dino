@@ -1,0 +1,10 @@
+.background{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 1920px;
+    height: 800px;
+    background:url('../assets/background.png') no-repeat;
+    background-size: 100% 100%;
+    z-index: -1;
+}

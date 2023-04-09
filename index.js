@@ -13,9 +13,12 @@ img2.src = './assets/dino.png';
 var img3 = new Image();
 img3.src = './assets/dinodown.png';
 
+var img4 = new Image();
+img4.src = './assets/background.png'
+
 var dino = {
     x:10,
-    y:230,
+    y:490,
     width: 50,
     height: 50,
     draw(){
@@ -25,7 +28,7 @@ var dino = {
 
 var dinodown = {
     x:10,
-    y:260,
+    y:515,
     width: 75,
     height: 25,
     draw(){
@@ -35,8 +38,8 @@ var dinodown = {
 
 class Cactus {
     constructor(){
-        this.x = 450;
-        this.y = 250;
+        this.x = 1920;
+        this.y = 495;
         this.width = 50;
         this.height = 50;
     }
@@ -44,6 +47,17 @@ class Cactus {
         ctx.drawImage(img1, this.x,this.y,this.width,this.height);
     }
 }
+
+var background = {
+    x:20,
+    y:-110,
+    width:1920,
+    height: 640,
+    draw(){
+        ctx.drawImage(img4, this.x,this.y,this.width,this.height)
+    }
+}
+
 
 var cactus = new Cactus();
 cactus.draw();
@@ -64,6 +78,7 @@ function actionPerFrame(){
     if(timer%120===0){
         var cactus = new Cactus();
         cactusmix.push(cactus);
+        
     }
     cactusmix.forEach((a, i, o)=>{
         if(a.x < 0-a.width ){
@@ -80,7 +95,7 @@ function actionPerFrame(){
     }
 
     if(jumping==false){
-        if(dino.y<230)
+        if(dino.y<490)
             dino.y+=4;
     }
 
@@ -90,8 +105,14 @@ function actionPerFrame(){
     }
 
 
-    if(down == true)
+    if(down == true) {
         dinodown.draw();
+        if(timer%6==0) {
+            img3.src = './assets/dinodown(2).png';
+        } else if(timer%6==1) {
+            img3.src = './assets/dinodown.png';
+        }
+    }
     else {
         dino.draw();
     }
@@ -101,7 +122,7 @@ function actionPerFrame(){
 actionPerFrame(); 
 
 document.addEventListener('keydown',function(e){
-    if((e.code==='ArrowUp' || e.code==='Space')&& dino.y == 230){
+    if((e.code==='ArrowUp' || e.code==='Space')&& dino.y == 490){
         jumping = true;
         down = false;
     }
